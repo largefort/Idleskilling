@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Skilling Game</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1>Idle Skilling Game</h1>
+    <hr>
+    <div class="mb-3">
+        <button class="btn btn-primary" onclick="work()">Work</button>
+        <p class="mt-2">You have: <span id="skill-count">0</span> skills</p>
+        <p>Earning: <span id="skills-per-second">0</span> skills/second</p>
+    </div>
+
+    <!-- Navigation bar -->
+    <div class="btn-group mb-3" role="group">
+        <button type="button" class="btn btn-secondary" onclick="showSection('home')">Home</button>
+        <button type="button" class="btn btn-secondary" onclick="showSection('skills')">Skills</button>
+        <button type="button" class="btn btn-secondary" onclick="showSection('upgrades')">Upgrades</button>
+    </div>
+
+    <!-- Home section -->
+    <div id="home-section">
+        <h2>Welcome!</h2>
+        <p>Click on the 'Work' button to earn skills. Use skills to purchase upgrades and improve different skills!</p>
+    </div>
+
+    <!-- Skills section -->
+    <div id="skills-section" hidden>
+        <h2>Skills</h2>
+        <div id="skills-list"></div>
+    </div>
+
+    <!-- Upgrades section -->
+    <div id="upgrades-section" hidden>
+        <h2>Upgrades</h2>
+        <div class="mb-3">
+            <button class="btn btn-warning" onclick="buyUpgrade('click')">Skill Boost (Cost: <span id="click-cost">10</span> skills)</button>
+            <p>Current boost: <span id="click-boost">1</span> skills/click</p>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-warning" onclick="buyUpgrade('auto')">Auto Trainer (Cost: <span id="auto-cost">15</span> skills)</button>
+            <p>Current rate: <span id="auto-boost">1</span> skills/second</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
