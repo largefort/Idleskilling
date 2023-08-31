@@ -5,11 +5,14 @@ let db;
 
 let upgradesOwned = {
     click: 0,
-    auto: 0
+    auto: 0,
+    autobuy: 0
 };
+
 let upgradeCosts = {
     click: 10,
-    auto: 15
+    auto: 15,
+    autobuy: 100
 };
 
 const newSkills = [
@@ -28,7 +31,6 @@ const newSkills = [
 ];
 
 let skillLevels = {};
-
 newSkills.forEach(skill => {
     skillLevels[skill.id] = 0;
 });
@@ -55,8 +57,8 @@ function loadGameData() {
             skills = getRequest.result.skills || 0;
             skillsPerSecond = getRequest.result.skillsPerSecond || 1;
             skillsPerClick = getRequest.result.skillsPerClick || 1;
-            upgradesOwned = getRequest.result.upgradesOwned || { click: 0, auto: 0 };
-            upgradeCosts = getRequest.result.upgradeCosts || { click: 10, auto: 15 };
+            upgradesOwned = getRequest.result.upgradesOwned || { click: 0, auto: 0, autobuy: 0 };
+            upgradeCosts = getRequest.result.upgradeCosts || { click: 10, auto: 15, autobuy: 100 };
             skillLevels = getRequest.result.skillLevels || skillLevels;
             updateDisplay();
             renderSkills();
@@ -97,17 +99,40 @@ function updateDisplay() {
 }
 
 function showSection(sectionId) {
-    document.getElementById('home-section').hidden = true;
-    document.getElementById('upgrades-section').hidden = true;
-    document.getElementById('skills-section').hidden = true;
-    document.getElementById(sectionId + '-section').hidden = false;
+    const sections = ['home', 'upgrades', 'skills'];
+    sections.forEach(sec => {
+        document.getElementById(`${sec}-section`).hidden = sec !== sectionId;
+    });
 }
 
-function buyUpgrade(type) {}
+function buyUpgrade(type) {
+    if (skills >= upgradeCosts[type]) {
+        skills -= upgradeCosts[type];
+        switch (type) {
+            case 'click':
+                skillsPerClick += 1;
+                upgradeCosts.click *= 1.5;
+                break;
+            case 'auto':
+                skillsPerSecond += 1;
+                upgradeCosts.auto *= 1.5;
+                break;
+            case 'autobuy':
+                setInterval(autoBuySkills, 5000);
+                upgradeCosts.autobuy *= 2;
+                break;
+        }
+        updateDisplay();
+        saveGameData();
+    } else {
+        alert('Not enough skills to buy this upgrade!');
+    }
+}
 
 function buySkill(skillId) {
     const skill = newSkills.find(s => s.id === skillId);
     const cost = skill.baseCost * (skillLevels[skillId] + 1);
+    
     if (skills >= cost) {
         skills -= cost;
         skillsPerSecond += skill.baseIncome;
@@ -126,15 +151,26 @@ function renderSkills() {
     newSkills.forEach(skill => {
         const skillDiv = document.createElement('div');
         skillDiv.className = 'mb-3';
+
         const button = document.createElement('button');
         button.className = 'btn btn-info mb-1';
         button.onclick = () => buySkill(skill.id);
         button.textContent = `${skill.name} (Cost: ${skill.baseCost * (skillLevels[skill.id] + 1)} skills)`;
+
         const levelDisplay = document.createElement('p');
         levelDisplay.textContent = `Level: ${skillLevels[skill.id]} | Income: ${skill.baseIncome * skillLevels[skill.id]} skills/second`;
+
         skillDiv.appendChild(button);
         skillDiv.appendChild(levelDisplay);
         skillsDiv.appendChild(skillDiv);
+    });
+}
+
+function autoBuySkills() {
+    newSkills.forEach(skill => {
+        if (skills >= skill.baseCost * (skillLevels[skill.id] + 1)) {
+            buySkill(skill.id);
+        }
     });
 }
 
