@@ -1,0 +1,76 @@
+/* Custom Styles for Idle Skilling Game */
+
+body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #007bff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #ffab00;
+}
+
+.nav-tabs {
+    background-color: #fff;
+    border-bottom: none;
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.tab-pane {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#skills-list .btn-info {
+    width: 48%;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    #skills-list .btn-info {
+        width: 100%;
+    }
+}
