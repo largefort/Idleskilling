@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Idle Skilling Game</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Bootstrap CSS library -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -17,27 +18,35 @@
         <p>Earning: <span id="skills-per-second">0</span> skills/second</p>
     </div>
 
-    <!-- Navigation bar -->
-    <div class="btn-group mb-3" role="group">
-        <button type="button" class="btn btn-secondary" onclick="showSection('home')">Home</button>
-        <button type="button" class="btn btn-secondary" onclick="showSection('skills')">Skills</button>
-        <button type="button" class="btn btn-secondary" onclick="showSection('upgrades')">Upgrades</button>
-    </div>
+    <!-- Bottom Navigation Bar -->
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+        <ul class="nav nav-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-section" onclick="showSection('home')">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="skills-tab" data-toggle="tab" href="#skills-section" onclick="showSection('skills')">Skills</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="upgrades-tab" data-toggle="tab" href="#upgrades-section" onclick="showSection('upgrades')">Upgrades</a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- Home section -->
-    <div id="home-section">
+    <div id="home-section" class="tab-pane fade show active">
         <h2>Welcome!</h2>
         <p>Click on the 'Work' button to earn skills. Use skills to purchase upgrades and improve different skills!</p>
     </div>
 
     <!-- Skills section -->
-    <div id="skills-section" hidden>
+    <div id="skills-section" class="tab-pane fade">
         <h2>Skills</h2>
         <div id="skills-list"></div>
     </div>
 
     <!-- Upgrades section -->
-    <div id="upgrades-section" hidden>
+    <div id="upgrades-section" class="tab-pane fade">
         <h2>Upgrades</h2>
         <div class="mb-3">
             <button class="btn btn-warning" onclick="buyUpgrade('click')">Skill Boost (Cost: <span id="click-cost">10</span> skills)</button>
@@ -47,9 +56,21 @@
             <button class="btn btn-warning" onclick="buyUpgrade('auto')">Auto Trainer (Cost: <span id="auto-cost">15</span> skills)</button>
             <p>Current rate: <span id="auto-boost">1</span> skills/second</p>
         </div>
+        <div class="mb-3">
+            <button class="btn btn-warning" onclick="buyUpgrade('autobuy')">Auto Buy Feature (Cost: <span id="autobuy-cost">100</span> skills)</button>
+            <p>Current level: <span id="autobuy-level">0</span></p>
+        </div>
     </div>
+
+    <!-- Add Fullscreen Button -->
+    <button class="btn btn-secondary" id="fullscreen-button">Toggle Fullscreen</button>
 </div>
 
+<!-- Add Bootstrap JS library and jQuery (required for Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Your game's JavaScript (script.js) -->
 <script src="script.js"></script>
 
 </body>
